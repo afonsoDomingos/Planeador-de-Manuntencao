@@ -150,6 +150,48 @@ export const DocsPage = () => {
             </div>
         </div>
 
+        <!-- Guia de Funcionamento -->
+        <div class="card-premium p-8">
+            <h3 class="text-2xl font-display font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+                <span class="w-1.5 h-8 bg-gradient-to-b from-indigo-400 to-purple-500 rounded-full"></span>
+                Como Funciona a Plataforma
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex gap-4 p-5 rounded-2xl bg-indigo-500/5 border border-indigo-500/10">
+                    <div class="w-10 h-10 rounded-full bg-indigo-500/20 flex items-center justify-center shrink-0 font-bold text-indigo-600 dark:text-indigo-400">1</div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 dark:text-white mb-1">Monitoramento Central</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">Inicie pelo <b>Dashboard</b> para visualizar o status de saúde da frota industrial em tempo real, acompanhando KPIs como disponibilidade e ativos críticos.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 p-5 rounded-2xl bg-indigo-500/5 border border-indigo-500/10">
+                    <div class="w-10 h-10 rounded-full bg-indigo-500/20 flex items-center justify-center shrink-0 font-bold text-indigo-600 dark:text-indigo-400">2</div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 dark:text-white mb-1">Gestão de Inventário</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">Na aba <b>Ativos & Sensores</b>, pode registar novos equipamentos e atualizar parâmetros. Use o botão de "Simulação" para observar como a IA reage ao desgaste aleatório.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 p-5 rounded-2xl bg-indigo-500/5 border border-indigo-500/10">
+                    <div class="w-10 h-10 rounded-full bg-indigo-500/20 flex items-center justify-center shrink-0 font-bold text-indigo-600 dark:text-indigo-400">3</div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 dark:text-white mb-1">Análise Preditiva</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">Vá para <b>Preditivo (IA)</b> para ver a estimativa de Vida Útil Restante (RUL). O sistema analisa vibrações e temperaturas para prever falhas antes que ocorram.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 p-5 rounded-2xl bg-indigo-500/5 border border-indigo-500/10">
+                    <div class="w-10 h-10 rounded-full bg-indigo-500/20 flex items-center justify-center shrink-0 font-bold text-indigo-600 dark:text-indigo-400">4</div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 dark:text-white mb-1">Planeamento Otimizado</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">No <b>Cronograma</b>, o motor de otimização sugere ordens de manutenção prioritárias, permitindo aprovar intervenções de forma inteligente e evitar downtime.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Features -->
         <div class="card-premium p-8">
             <h3 class="text-2xl font-display font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
