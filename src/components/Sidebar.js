@@ -30,6 +30,14 @@ export const Sidebar = () => `
                     <span class="hidden lg:block">Cronograma</span>
                 </a>
             </nav>
+            
+            <div class="px-6 mt-auto mb-4 hidden lg:block">
+                <p class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-2">Developer</p>
+                <a href="https://www.linkedin.com/in/afonso-domingos-6b59361a5/" target="_blank" class="flex items-center gap-2 text-xs text-slate-400 hover:text-white transition-colors group">
+                    <span class="w-6 h-6 rounded-full bg-slate-800 flex items-center justify-center text-primary-400 font-bold group-hover:bg-primary-500 group-hover:text-white transition-all">AD</span>
+                    <span>Afonso Domingos (MUV)</span>
+                </a>
+            </div>
         </div>
 
         <!-- User -->
