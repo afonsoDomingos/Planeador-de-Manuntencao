@@ -1,9 +1,15 @@
 import { dataService } from '../services/dataService.js';
+import { Modal, showModal, hideModal } from '../components/Modal.js';
 
 export const AssetsPage = () => {
     // Initial Render
     const renderTable = (filter = '') => {
         const assets = dataService.getAssets(filter);
+
+        if (assets.length === 0) {
+            return `<tr><td colspan="6" class="p-12 text-center text-slate-500">Nenhum ativo encontrado.</td></tr>`;
+        }
+
         return assets.map(a => `
             <tr class="group hover:bg-white/[0.02] transition-colors">
                 <td class="p-6 font-mono text-sky-400">${a.id}</td>
@@ -26,9 +32,14 @@ export const AssetsPage = () => {
                     </div>
                 </td>
                 <td class="p-6 text-right">
-                    <button class="p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-all">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-                    </button>
+                    <div class="flex items-center justify-end gap-2">
+                        <button class="edit-btn p-2 text-slate-400 hover:text-indigo-400 hover:bg-indigo-500/10 rounded-lg transition-all" data-id="${a.id}">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                        </button>
+                        <button class="delete-btn p-2 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-all" data-id="${a.id}">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                        </button>
+                    </div>
                 </td>
             </tr>
         `).join('');
@@ -46,73 +57,230 @@ export const AssetsPage = () => {
         return 'bg-rose-500';
     };
 
+    const createFormContent = (asset = null) => `
+        <form id="asset-form" class="space-y-4">
+            <div>
+                <label class="block text-sm font-semibold text-slate-300 mb-2">ID do Ativo</label>
+                <input type="text" name="id" value="${asset ? asset.id : ''}" ${asset ? 'readonly' : ''} required
+                    class="w-full px-4 py-2.5 bg-slate-800/50 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all ${asset ? 'opacity-50 cursor-not-allowed' : ''}"
+                    placeholder="AST-XXX">
+            </div>
+            
+            <div>
+                <label class="block text-sm font-semibold text-slate-300 mb-2">Nome</label>
+                <input type="text" name="name" value="${asset ? asset.name : ''}" required
+                    class="w-full px-4 py-2.5 bg-slate-800/50 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all"
+                    placeholder="Ex: Turbina de Compressão A1">
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-300 mb-2">Criticidade</label>
+                    <select name="criticality" required
+                        class="w-full px-4 py-2.5 bg-slate-800/50 border border-white/10 rounded-xl text-white focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all">
+                        <option value="Crítica" ${asset && asset.criticality === 'Crítica' ? 'selected' : ''}>Crítica</option>
+                        <option value="Alta" ${asset && asset.criticality === 'Alta' ? 'selected' : ''}>Alta</option>
+                        <option value="Média" ${asset && asset.criticality === 'Média' ? 'selected' : ''}>Média</option>
+                        <option value="Baixa" ${asset && asset.criticality === 'Baixa' ? 'selected' : ''}>Baixa</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-slate-300 mb-2">Status</label>
+                    <select name="status" required
+                        class="w-full px-4 py-2.5 bg-slate-800/50 border border-white/10 rounded-xl text-white focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all">
+                        <option value="Healthy" ${asset && asset.status === 'Healthy' ? 'selected' : ''}>Healthy</option>
+                        <option value="Warning" ${asset && asset.status === 'Warning' ? 'selected' : ''}>Warning</option>
+                        <option value="Critical" ${asset && asset.status === 'Critical' ? 'selected' : ''}>Critical</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-slate-300 mb-2">Saúde (%)</label>
+                <input type="number" name="healthScore" value="${asset ? asset.healthScore : 100}" min="0" max="100" required
+                    class="w-full px-4 py-2.5 bg-slate-800/50 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all">
+            </div>
+
+            <div class="flex gap-3 pt-4">
+                <button type="submit" class="flex-1 btn-primary-glow justify-center">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                    ${asset ? 'Atualizar' : 'Criar'} Ativo
+                </button>
+                <button type="button" class="modal-close px-6 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold transition-all">
+                    Cancelar
+                </button>
+            </div>
+        </form>
+    `;
+
     // Defer Event Listener assignment
     setTimeout(() => {
         const searchInput = document.getElementById('asset-search');
         const tbody = document.getElementById('assets-body');
         const simBtn = document.getElementById('sim-btn');
+        const addBtn = document.getElementById('add-asset-btn');
 
+        // Search functionality
         if (searchInput && tbody) {
             searchInput.addEventListener('input', (e) => {
                 tbody.innerHTML = renderTable(e.target.value);
+                attachRowListeners();
             });
         }
 
+        // Simulation functionality
         if (simBtn && tbody) {
             simBtn.addEventListener('click', () => {
                 dataService.simulateDegradation();
                 tbody.innerHTML = renderTable(searchInput ? searchInput.value : '');
+                attachRowListeners();
 
-                // Visual feedback
                 const icon = simBtn.querySelector('svg');
                 icon.classList.add('animate-spin');
                 setTimeout(() => icon.classList.remove('animate-spin'), 500);
             });
         }
+
+        // Add Asset
+        if (addBtn) {
+            addBtn.addEventListener('click', () => {
+                const modalContent = createFormContent();
+                document.getElementById('asset-modal-content').innerHTML = modalContent;
+                document.getElementById('asset-modal-title').textContent = 'Novo Ativo';
+                showModal('asset-modal');
+
+                setTimeout(() => {
+                    const form = document.getElementById('asset-form');
+                    if (form) {
+                        form.onsubmit = (e) => {
+                            e.preventDefault();
+                            const formData = new FormData(form);
+                            const newAsset = {
+                                id: formData.get('id'),
+                                name: formData.get('name'),
+                                criticality: formData.get('criticality'),
+                                status: formData.get('status'),
+                                healthScore: parseInt(formData.get('healthScore')),
+                                lastMaintenance: new Date().toISOString().split('T')[0],
+                                vibration: Math.random() * 5,
+                                temp: Math.random() * 100
+                            };
+
+                            dataService.addAsset(newAsset);
+                            tbody.innerHTML = renderTable(searchInput ? searchInput.value : '');
+                            attachRowListeners();
+                            hideModal('asset-modal');
+                        };
+                    }
+                }, 100);
+            });
+        }
+
+        attachRowListeners();
     }, 100);
 
+    const attachRowListeners = () => {
+        const tbody = document.getElementById('assets-body');
+        const searchInput = document.getElementById('asset-search');
+
+        // Edit buttons
+        document.querySelectorAll('.edit-btn').forEach(btn => {
+            btn.onclick = () => {
+                const id = btn.getAttribute('data-id');
+                const asset = dataService.getAssets().find(a => a.id === id);
+
+                if (asset) {
+                    const modalContent = createFormContent(asset);
+                    document.getElementById('asset-modal-content').innerHTML = modalContent;
+                    document.getElementById('asset-modal-title').textContent = 'Editar Ativo';
+                    showModal('asset-modal');
+
+                    setTimeout(() => {
+                        const form = document.getElementById('asset-form');
+                        if (form) {
+                            form.onsubmit = (e) => {
+                                e.preventDefault();
+                                const formData = new FormData(form);
+                                const updatedData = {
+                                    name: formData.get('name'),
+                                    criticality: formData.get('criticality'),
+                                    status: formData.get('status'),
+                                    healthScore: parseInt(formData.get('healthScore'))
+                                };
+
+                                dataService.updateAsset(id, updatedData);
+                                tbody.innerHTML = renderTable(searchInput ? searchInput.value : '');
+                                attachRowListeners();
+                                hideModal('asset-modal');
+                            };
+                        }
+                    }, 100);
+                }
+            };
+        });
+
+        // Delete buttons
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.onclick = () => {
+                const id = btn.getAttribute('data-id');
+                const asset = dataService.getAssets().find(a => a.id === id);
+
+                if (asset && confirm(`Tem certeza que deseja excluir "${asset.name}"?`)) {
+                    dataService.deleteAsset(id);
+                    tbody.innerHTML = renderTable(searchInput ? searchInput.value : '');
+                    attachRowListeners();
+                }
+            };
+        });
+    };
+
     return `
-      <div class="card-premium overflow-hidden animate-fade-in-up">
-        <div class="p-6 border-b border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 bg-white/[0.02]">
-            <div>
-                <h3 class="text-2xl font-display font-bold text-white">Inventário de Ativos</h3>
-                <p class="text-slate-400 text-sm mt-1">Gestão centralizada de equipamentos e sensores.</p>
-            </div>
-            
-            <div class="flex items-center gap-3 w-full md:w-auto">
-                <div class="relative w-full md:w-64">
-                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                    <input type="text" id="asset-search" placeholder="Filtrar por nome ou ID..." 
-                        class="w-full pl-10 pr-4 py-2 bg-slate-900/50 border border-white/10 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all">
-                </div>
-                
-                <button id="sim-btn" class="px-5 py-2.5 rounded-xl bg-orange-500/10 text-orange-400 font-semibold border border-orange-500/20 hover:bg-orange-500/20 transition-all flex items-center gap-2">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                    <span class="hidden md:inline">Simular Desgaste (IA)</span>
-                </button>
-                <button class="btn-primary-glow whitespace-nowrap">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
-                    <span class="hidden md:inline">Novo Ativo</span>
-                </button>
-            </div>
-        </div>
-        <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
-                <thead>
-                    <tr class="text-xs text-slate-400 uppercase tracking-wider border-b border-white/5 bg-white/[0.01]">
-                        <th class="p-6 font-semibold">ID</th>
-                        <th class="p-6 font-semibold">Nome</th>
-                        <th class="p-6 font-semibold">Criticidade</th>
-                        <th class="p-6 font-semibold">Status</th>
-                        <th class="p-6 font-semibold">Saúde</th>
-                        <th class="p-6 font-semibold text-right">Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="assets-body" class="divide-y divide-white/5">
-                    ${renderTable()}
-                </tbody>
-            </table>
+      <div class="space-y-6 animate-fade-in-up">
+        <div class="card-premium overflow-hidden">
+          <div class="p-6 border-b border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 bg-white/[0.02]">
+              <div>
+                  <h3 class="text-2xl font-display font-bold text-white">Inventário de Ativos</h3>
+                  <p class="text-slate-400 text-sm mt-1">Gestão centralizada de equipamentos e sensores.</p>
+              </div>
+              
+              <div class="flex items-center gap-3 w-full md:w-auto">
+                  <div class="relative w-full md:w-64">
+                      <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                      <input type="text" id="asset-search" placeholder="Filtrar por nome ou ID..." 
+                          class="w-full pl-10 pr-4 py-2 bg-slate-900/50 border border-white/10 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all">
+                  </div>
+                  
+                  <button id="sim-btn" class="px-5 py-2.5 rounded-xl bg-orange-500/10 text-orange-400 font-semibold border border-orange-500/20 hover:bg-orange-500/20 transition-all flex items-center gap-2">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                      <span class="hidden md:inline">Simular Desgaste (IA)</span>
+                  </button>
+                  <button id="add-asset-btn" class="btn-primary-glow whitespace-nowrap">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                      <span class="hidden md:inline">Novo Ativo</span>
+                  </button>
+              </div>
+          </div>
+          <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                  <thead>
+                      <tr class="text-xs text-slate-400 uppercase tracking-wider border-b border-white/5 bg-white/[0.01]">
+                          <th class="p-6 font-semibold">ID</th>
+                          <th class="p-6 font-semibold">Nome</th>
+                          <th class="p-6 font-semibold">Criticidade</th>
+                          <th class="p-6 font-semibold">Status</th>
+                          <th class="p-6 font-semibold">Saúde</th>
+                          <th class="p-6 font-semibold text-right">Ações</th>
+                      </tr>
+                  </thead>
+                  <tbody id="assets-body" class="divide-y divide-white/5">
+                      ${renderTable()}
+                  </tbody>
+              </table>
+          </div>
         </div>
       </div>
+
+      ${Modal('asset-modal', '<span id="asset-modal-title">Modal</span>', '<div id="asset-modal-content"></div>')}
     `;
 };

@@ -33,6 +33,26 @@ class DataService {
     this.save();
   }
 
+  updateAsset(id, updatedData) {
+    const index = this.assets.findIndex(a => a.id === id);
+    if (index !== -1) {
+      this.assets[index] = { ...this.assets[index], ...updatedData };
+      this.save();
+      return true;
+    }
+    return false;
+  }
+
+  deleteAsset(id) {
+    const index = this.assets.findIndex(a => a.id === id);
+    if (index !== -1) {
+      this.assets.splice(index, 1);
+      this.save();
+      return true;
+    }
+    return false;
+  }
+
   getKPIs() {
     const totalAssets = this.assets.length;
     const criticalAssets = this.assets.filter(a => a.healthScore < 70).length;
