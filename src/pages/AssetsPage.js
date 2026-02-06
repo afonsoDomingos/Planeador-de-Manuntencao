@@ -50,10 +50,23 @@ export const AssetsPage = () => {
     setTimeout(() => {
         const searchInput = document.getElementById('asset-search');
         const tbody = document.getElementById('assets-body');
+        const simBtn = document.getElementById('sim-btn');
 
         if (searchInput && tbody) {
             searchInput.addEventListener('input', (e) => {
                 tbody.innerHTML = renderTable(e.target.value);
+            });
+        }
+
+        if (simBtn && tbody) {
+            simBtn.addEventListener('click', () => {
+                dataService.simulateDegradation();
+                tbody.innerHTML = renderTable(searchInput ? searchInput.value : '');
+
+                // Visual feedback
+                const icon = simBtn.querySelector('svg');
+                icon.classList.add('animate-spin');
+                setTimeout(() => icon.classList.remove('animate-spin'), 500);
             });
         }
     }, 100);
@@ -73,6 +86,10 @@ export const AssetsPage = () => {
                         class="w-full pl-10 pr-4 py-2 bg-slate-900/50 border border-white/10 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all">
                 </div>
                 
+                <button id="sim-btn" class="px-5 py-2.5 rounded-xl bg-orange-500/10 text-orange-400 font-semibold border border-orange-500/20 hover:bg-orange-500/20 transition-all flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                    <span class="hidden md:inline">Simular Desgaste (IA)</span>
+                </button>
                 <button class="btn-primary-glow whitespace-nowrap">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
                     <span class="hidden md:inline">Novo Ativo</span>

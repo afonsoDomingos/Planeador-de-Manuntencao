@@ -58,6 +58,27 @@ class DataService {
     return rul;
   }
 
+  simulateDegradation() {
+    this.assets = this.assets.map(asset => {
+      // Random chance (40%) for an asset to degrade
+      if (Math.random() > 0.6) {
+        const drop = Math.floor(Math.random() * 5) + 1; // Drop 1-5 points
+        let newHealth = (asset.healthScore || 100) - drop;
+        if (newHealth < 0) newHealth = 0;
+
+        // Update status based on new health
+        let newStatus = 'Healthy';
+        if (newHealth < 50) newStatus = 'Critical';
+        else if (newHealth < 80) newStatus = 'Warning';
+
+        return { ...asset, healthScore: newHealth, status: newStatus };
+      }
+      return asset;
+    });
+    this.save();
+    return this.assets;
+  }
+
   optimizePlan() {
     // Identify risks
     const risks = this.assets.filter(a => a.healthScore < 85);
