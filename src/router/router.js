@@ -2,6 +2,7 @@ import { DashboardPage } from '../pages/DashboardPage.js';
 import { AssetsPage } from '../pages/AssetsPage.js';
 import { PredictionsPage } from '../pages/PredictionsPage.js';
 import { MaintenancePage } from '../pages/MaintenancePage.js';
+import { DocsPage } from '../pages/DocsPage.js';
 
 export const navigate = (pageId) => {
     const content = document.getElementById('page-container');
@@ -17,7 +18,8 @@ export const navigate = (pageId) => {
         dashboard: { view: DashboardPage, title: 'Centro de Comando' },
         assets: { view: AssetsPage, title: 'Ativos e Sensores' },
         predictions: { view: PredictionsPage, title: 'Inteligência Preditiva' },
-        maintenance: { view: MaintenancePage, title: 'Planeador' }
+        maintenance: { view: MaintenancePage, title: 'Planeador' },
+        docs: { view: DocsPage, title: 'Documentação Técnica' }
     };
 
     const route = routes[pageId] || routes.dashboard;
