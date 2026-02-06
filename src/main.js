@@ -2,6 +2,7 @@ import './style.css';
 import { Sidebar } from './components/Sidebar.js';
 import { Header } from './components/Header.js';
 import { navigate } from './router/router.js';
+import { themeService } from './services/themeService.js';
 
 // App Initialization
 document.addEventListener('DOMContentLoaded', () => {
@@ -26,6 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (page) navigate(page);
         });
     });
+
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            themeService.toggle();
+        });
+    }
 
     // Initial Route
     navigate('dashboard');

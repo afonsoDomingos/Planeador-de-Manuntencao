@@ -4,6 +4,33 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+
+  /* Light Mode (Default) */
+  :root {
+    --bg-primary: 255 255 255;
+    --bg-secondary: 248 250 252;
+    --bg-card: 255 255 255;
+    --text-primary: 15 23 42;
+    --text-secondary: 71 85 105;
+    --border-color: 226 232 240;
+  }
+
+  /* Dark Mode */
+  .dark {
+    --bg-primary: 15 23 42;
+    --bg-secondary: 30 41 59;
+    --bg-card: 30 41 59;
+    --text-primary: 248 250 252;
+    --text-secondary: 148 163 184;
+    --border-color: 51 65 85;
+  }
+
+  body {
+    @apply bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors duration-300;
+  }
+}
+
 @layer components {
 
   /* Premium Glass Card */
