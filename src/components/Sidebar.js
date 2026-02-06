@@ -1,59 +1,59 @@
 export const Sidebar = () => `
-    <aside class="w-20 lg:w-72 bg-dark-900/80 backdrop-blur-md border-r border-white/5 flex flex-col justify-between shrink-0 transition-all duration-300 z-50 h-full relative">
+    <aside class="w-20 lg:w-72 bg-white dark:bg-dark-900/80 backdrop-blur-md border-r border-slate-200 dark:border-white/5 flex flex-col justify-between shrink-0 transition-all duration-300 z-50 h-full relative">
         <div>
             <!-- Brand -->
-            <div class="h-20 flex items-center px-6 lg:px-8 border-b border-white/5">
+            <div class="h-20 flex items-center px-6 lg:px-8 border-b border-slate-200 dark:border-white/5">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-purple-600 flex items-center justify-center shadow-lg shadow-primary-500/20">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                     </div>
-                    <span class="text-xl font-display font-bold text-white tracking-tight hidden lg:block">PredictAI</span>
+                    <span class="text-xl font-display font-bold text-slate-900 dark:text-white tracking-tight hidden lg:block">PredictAI</span>
                 </div>
             </div>
 
             <!-- Nav -->
             <nav class="p-4 space-y-2">
                 <a href="/" class="nav-link group" data-page="dashboard">
-                    <svg class="w-5 h-5 group-hover:text-primary-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+                    <svg class="w-5 h-5 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
                     <span class="hidden lg:block">Dashboard</span>
                 </a>
                 <a href="/assets" class="nav-link group" data-page="assets">
-                    <svg class="w-5 h-5 group-hover:text-primary-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                    <svg class="w-5 h-5 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
                     <span class="hidden lg:block">Ativos & Sensores</span>
                 </a>
                 <a href="/predictions" class="nav-link group" data-page="predictions">
-                    <svg class="w-5 h-5 group-hover:text-primary-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                    <svg class="w-5 h-5 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
                     <span class="hidden lg:block">Preditivo (IA)</span>
                 </a>
                 <a href="/maintenance" class="nav-link group" data-page="maintenance">
-                    <svg class="w-5 h-5 group-hover:text-primary-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                    <svg class="w-5 h-5 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                     <span class="hidden lg:block">Cronograma</span>
                 </a>
                 <a href="/docs" class="nav-link group" data-page="docs">
-                    <svg class="w-5 h-5 group-hover:text-primary-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                    <svg class="w-5 h-5 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                     <span class="hidden lg:block">Documentação</span>
                 </a>
             </nav>
             
             <div class="px-6 mt-auto mb-4 hidden lg:block">
-                <p class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-2">Developer</p>
-                <a href="https://www.linkedin.com/in/afonso-domingos-6b59361a5/" target="_blank" class="flex items-center gap-2 text-xs text-slate-400 hover:text-white transition-colors group">
-                    <span class="w-6 h-6 rounded-full bg-slate-800 flex items-center justify-center text-primary-400 font-bold group-hover:bg-primary-500 group-hover:text-white transition-all">AD</span>
+                <p class="text-[10px] text-slate-500 dark:text-slate-500 uppercase font-bold tracking-widest mb-2">Developer</p>
+                <a href="https://www.linkedin.com/in/afonso-domingos-6b59361a5/" target="_blank" class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors group">
+                    <span class="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-primary-600 dark:text-primary-400 font-bold group-hover:bg-primary-500 group-hover:text-white transition-all">AD</span>
                     <span>Afonso Domingos (MUV)</span>
                 </a>
             </div>
         </div>
 
         <!-- User -->
-        <div class="p-4 lg:p-6 border-t border-white/5">
+        <div class="p-4 lg:p-6 border-t border-slate-200 dark:border-white/5">
             <div class="flex items-center gap-3">
                 <div class="relative">
                     <img src="https://ui-avatars.com/api/?name=Admin+User&background=random&color=fff" class="w-10 h-10 rounded-full border-2 border-primary-500/50">
-                    <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-dark-900 rounded-full"></span>
+                    <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white dark:border-dark-900 rounded-full"></span>
                 </div>
                 <div class="hidden lg:block">
-                    <div class="text-sm font-bold text-white">Eng. Chefe</div>
-                    <div class="text-xs text-slate-400">Planta #04</div>
+                    <div class="text-sm font-bold text-slate-900 dark:text-white">Eng. Chefe</div>
+                    <div class="text-xs text-slate-500 dark:text-slate-400">Planta #04</div>
                 </div>
             </div>
         </div>

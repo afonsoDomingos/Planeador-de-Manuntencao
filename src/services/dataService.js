@@ -1,15 +1,29 @@
 // Initial Mock Data
 const initialAssets = [
-  { id: 'AST-001', name: 'Turbina de Compressão A1', criticality: 'Crítica', status: 'Healthy', healthScore: 92, lastMaintenance: '2023-10-15', vibration: 2.1, temp: 65 },
-  { id: 'AST-002', name: 'Bomba Hidráulica B2', criticality: 'Alta', status: 'Healthy', healthScore: 88, lastMaintenance: '2023-11-02', vibration: 1.8, temp: 58 },
-  { id: 'AST-003', name: 'Correia Transportadora C1', criticality: 'Média', status: 'Warning', healthScore: 65, lastMaintenance: '2023-09-20', vibration: 4.5, temp: 72 },
-  { id: 'AST-004', name: 'Motor de Indução M4', criticality: 'Baixa', status: 'Healthy', healthScore: 95, lastMaintenance: '2023-11-20', vibration: 0.5, temp: 45 },
-  { id: 'AST-005', name: 'Gerador Estacionário G1', criticality: 'Crítica', status: 'Healthy', healthScore: 98, lastMaintenance: '2023-12-01', vibration: 1.2, temp: 60 },
+  { id: 'AST-001', name: 'Turbina de Compressão A1', criticality: 'Crítica', status: 'Saudável', healthScore: 92, lastMaintenance: '2023-10-15', vibration: 2.1, temp: 65 },
+  { id: 'AST-002', name: 'Bomba Hidráulica B2', criticality: 'Alta', status: 'Saudável', healthScore: 88, lastMaintenance: '2023-11-02', vibration: 1.8, temp: 58 },
+  { id: 'AST-003', name: 'Correia Transportadora C1', criticality: 'Média', status: 'Atenção', healthScore: 65, lastMaintenance: '2023-09-20', vibration: 4.5, temp: 72 },
+  { id: 'AST-004', name: 'Motor de Indução M4', criticality: 'Baixa', status: 'Saudável', healthScore: 95, lastMaintenance: '2023-11-20', vibration: 0.5, temp: 45 },
+  { id: 'AST-005', name: 'Gerador Estacionário G1', criticality: 'Crítica', status: 'Saudável', healthScore: 98, lastMaintenance: '2023-12-01', vibration: 1.2, temp: 60 },
 ];
 
 class DataService {
   constructor() {
-    this.assets = JSON.parse(localStorage.getItem('predictAI_assets')) || initialAssets;
+    let savedAssets = JSON.parse(localStorage.getItem('predictAI_assets'));
+
+    if (savedAssets) {
+      // Migrate English statuses to Portuguese if they exist
+      savedAssets = savedAssets.map(a => {
+        if (a.status === 'Healthy') a.status = 'Saudável';
+        if (a.status === 'Warning') a.status = 'Atenção';
+        if (a.status === 'Critical') a.status = 'Crítico';
+        return a;
+      });
+      this.assets = savedAssets;
+    } else {
+      this.assets = initialAssets;
+    }
+
     this.maintenancePlan = JSON.parse(localStorage.getItem('predictAI_plan')) || [];
   }
 
@@ -87,9 +101,9 @@ class DataService {
         if (newHealth < 0) newHealth = 0;
 
         // Update status based on new health
-        let newStatus = 'Healthy';
-        if (newHealth < 50) newStatus = 'Critical';
-        else if (newHealth < 80) newStatus = 'Warning';
+        let newStatus = 'Saudável';
+        if (newHealth < 50) newStatus = 'Crítico';
+        else if (newHealth < 80) newStatus = 'Atenção';
 
         return { ...asset, healthScore: newHealth, status: newStatus };
       }

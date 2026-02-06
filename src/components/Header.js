@@ -1,7 +1,7 @@
 export const Header = (title) => `
-    <header class="h-20 border-b border-white/5 bg-dark-900/50 backdrop-blur-sm flex justify-between items-center px-8 sticky top-0 z-40 w-full">
+    <header class="h-20 border-b border-slate-200 dark:border-white/5 bg-white/80 dark:bg-dark-900/50 backdrop-blur-sm flex justify-between items-center px-8 sticky top-0 z-40 w-full transition-colors duration-300">
         <div>
-            <h2 id="page-title" class="text-2xl font-display font-bold text-white transition-all duration-300 transform translate-y-0 opacity-100">${title}</h2>
+            <h2 id="page-title" class="text-2xl font-display font-bold text-slate-900 dark:text-white transition-all duration-300 transform translate-y-0 opacity-100">${title}</h2>
         </div>
         <div class="flex items-center gap-4">
             <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 dark:bg-white/5 border border-white/5 text-sm text-slate-300 dark:text-slate-300">

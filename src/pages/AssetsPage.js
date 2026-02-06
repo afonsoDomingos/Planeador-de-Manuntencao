@@ -11,32 +11,32 @@ export const AssetsPage = () => {
         }
 
         return assets.map(a => `
-            <tr class="group hover:bg-white/[0.02] transition-colors">
-                <td class="p-6 font-mono text-sky-400">${a.id}</td>
-                <td class="p-6 font-medium text-white group-hover:text-primary-300 transition-colors">${a.name}</td>
+            <tr class="group hover:bg-slate-50 dark:hover:bg-white/[0.02] transition-colors">
+                <td class="p-6 font-mono text-sky-600 dark:text-sky-400">${a.id}</td>
+                <td class="p-6 font-medium text-slate-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-300 transition-colors">${a.name}</td>
                 <td class="p-6">
                     <span class="px-2.5 py-1 rounded-full text-xs font-bold border ${backgroundForCriticality(a.criticality)}">${a.criticality}</span>
                 </td>
                 <td class="p-6">
                     <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full ${a.status === 'Healthy' ? 'bg-emerald-500 shadow-[0_0_10px_-2px_rgba(16,185,129,0.5)]' : 'bg-rose-500 shadow-[0_0_10px_-2px_rgba(244,63,94,0.5)]'}"></span>
-                        <span class="text-sm text-slate-300">${a.status}</span>
+                        <span class="w-2 h-2 rounded-full ${a.status === 'Saudável' ? 'bg-emerald-500 shadow-[0_0_10px_-2px_rgba(16,185,129,0.5)]' : (a.status === 'Atenção' ? 'bg-orange-500 shadow-[0_0_10px_-2px_rgba(245,158,11,0.5)]' : 'bg-rose-500 shadow-[0_0_10px_-2px_rgba(244,63,94,0.5)]')}"></span>
+                        <span class="text-sm text-slate-600 dark:text-slate-300">${a.status}</span>
                     </div>
                 </td>
                 <td class="p-6 w-48">
                     <div class="flex items-center gap-3">
-                        <span class="text-sm font-bold w-8 text-right text-slate-300">${a.healthScore !== undefined ? a.healthScore : 0}%</span>
-                        <div class="flex-1 h-1.5 bg-slate-700/50 rounded-full overflow-hidden">
+                        <span class="text-sm font-bold w-8 text-right text-slate-700 dark:text-slate-300">${a.healthScore !== undefined ? a.healthScore : 0}%</span>
+                        <div class="flex-1 h-1.5 bg-slate-200 dark:bg-slate-700/50 rounded-full overflow-hidden">
                             <div style="width: ${a.healthScore !== undefined ? a.healthScore : 0}%" class="h-full rounded-full transition-all duration-500 ${getColorForHealth(a.healthScore)}"></div>
                         </div>
                     </div>
                 </td>
                 <td class="p-6 text-right">
                     <div class="flex items-center justify-end gap-2">
-                        <button class="edit-btn p-2 text-slate-400 hover:text-indigo-400 hover:bg-indigo-500/10 rounded-lg transition-all" data-id="${a.id}">
+                        <button class="edit-btn p-2 text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-500/10 rounded-lg transition-all" data-id="${a.id}">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
                         </button>
-                        <button class="delete-btn p-2 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-all" data-id="${a.id}">
+                        <button class="delete-btn p-2 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-all" data-id="${a.id}">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                         </button>
                     </div>
@@ -46,9 +46,9 @@ export const AssetsPage = () => {
     };
 
     const backgroundForCriticality = (crit) => {
-        if (crit === 'Crítica') return 'bg-rose-500/10 text-rose-400 border-rose-500/20';
-        if (crit === 'Alta') return 'bg-orange-500/10 text-orange-400 border-orange-500/20';
-        return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+        if (crit === 'Crítica') return 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20';
+        if (crit === 'Alta') return 'bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/20';
+        return 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20';
     };
 
     const getColorForHealth = (score) => {
@@ -60,24 +60,24 @@ export const AssetsPage = () => {
     const createFormContent = (asset = null) => `
         <form id="asset-form" class="space-y-4">
             <div>
-                <label class="block text-sm font-semibold text-slate-300 mb-2">ID do Ativo</label>
+                <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">ID do Ativo</label>
                 <input type="text" name="id" value="${asset ? asset.id : ''}" ${asset ? 'readonly' : ''} required
-                    class="w-full px-4 py-2.5 bg-slate-800/50 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all ${asset ? 'opacity-50 cursor-not-allowed' : ''}"
+                    class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all ${asset ? 'opacity-50 cursor-not-allowed' : ''}"
                     placeholder="AST-XXX">
             </div>
             
             <div>
-                <label class="block text-sm font-semibold text-slate-300 mb-2">Nome</label>
+                <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Nome</label>
                 <input type="text" name="name" value="${asset ? asset.name : ''}" required
-                    class="w-full px-4 py-2.5 bg-slate-800/50 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all"
+                    class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all"
                     placeholder="Ex: Turbina de Compressão A1">
             </div>
 
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-semibold text-slate-300 mb-2">Criticidade</label>
+                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Criticidade</label>
                     <select name="criticality" required
-                        class="w-full px-4 py-2.5 bg-slate-800/50 border border-white/10 rounded-xl text-white focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all">
+                        class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all">
                         <option value="Crítica" ${asset && asset.criticality === 'Crítica' ? 'selected' : ''}>Crítica</option>
                         <option value="Alta" ${asset && asset.criticality === 'Alta' ? 'selected' : ''}>Alta</option>
                         <option value="Média" ${asset && asset.criticality === 'Média' ? 'selected' : ''}>Média</option>
@@ -86,20 +86,20 @@ export const AssetsPage = () => {
                 </div>
 
                 <div>
-                    <label class="block text-sm font-semibold text-slate-300 mb-2">Status</label>
+                    <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Status</label>
                     <select name="status" required
-                        class="w-full px-4 py-2.5 bg-slate-800/50 border border-white/10 rounded-xl text-white focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all">
-                        <option value="Healthy" ${asset && asset.status === 'Healthy' ? 'selected' : ''}>Healthy</option>
-                        <option value="Warning" ${asset && asset.status === 'Warning' ? 'selected' : ''}>Warning</option>
-                        <option value="Critical" ${asset && asset.status === 'Critical' ? 'selected' : ''}>Critical</option>
+                        class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all">
+                        <option value="Saudável" ${asset && asset.status === 'Saudável' ? 'selected' : ''}>Saudável</option>
+                        <option value="Atenção" ${asset && asset.status === 'Atenção' ? 'selected' : ''}>Atenção</option>
+                        <option value="Crítico" ${asset && asset.status === 'Crítico' ? 'selected' : ''}>Crítico</option>
                     </select>
                 </div>
             </div>
 
             <div>
-                <label class="block text-sm font-semibold text-slate-300 mb-2">Saúde (%)</label>
+                <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Saúde (%)</label>
                 <input type="number" name="healthScore" value="${asset ? asset.healthScore : 100}" min="0" max="100" required
-                    class="w-full px-4 py-2.5 bg-slate-800/50 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all">
+                    class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all">
             </div>
 
             <div class="flex gap-3 pt-4">
@@ -107,7 +107,7 @@ export const AssetsPage = () => {
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
                     ${asset ? 'Atualizar' : 'Criar'} Ativo
                 </button>
-                <button type="button" class="modal-close px-6 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold transition-all">
+                <button type="button" class="modal-close px-6 py-2.5 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white font-semibold transition-all">
                     Cancelar
                 </button>
             </div>
@@ -238,20 +238,20 @@ export const AssetsPage = () => {
     return `
       <div class="space-y-6 animate-fade-in-up">
         <div class="card-premium overflow-hidden">
-          <div class="p-6 border-b border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 bg-white/[0.02]">
+          <div class="p-6 border-b border-slate-200 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-50/50 dark:bg-white/[0.02]">
               <div>
-                  <h3 class="text-2xl font-display font-bold text-white">Inventário de Ativos</h3>
-                  <p class="text-slate-400 text-sm mt-1">Gestão centralizada de equipamentos e sensores.</p>
+                  <h3 class="text-2xl font-display font-bold text-slate-900 dark:text-white">Inventário de Ativos</h3>
+                  <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Gestão centralizada de equipamentos e sensores.</p>
               </div>
               
               <div class="flex items-center gap-3 w-full md:w-auto">
                   <div class="relative w-full md:w-64">
-                      <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                      <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                       <input type="text" id="asset-search" placeholder="Filtrar por nome ou ID..." 
-                          class="w-full pl-10 pr-4 py-2 bg-slate-900/50 border border-white/10 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all">
+                          class="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-white/10 rounded-xl text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all">
                   </div>
                   
-                  <button id="sim-btn" class="px-5 py-2.5 rounded-xl bg-orange-500/10 text-orange-400 font-semibold border border-orange-500/20 hover:bg-orange-500/20 transition-all flex items-center gap-2">
+                  <button id="sim-btn" class="px-5 py-2.5 rounded-xl bg-orange-500/10 text-orange-600 dark:text-orange-400 font-semibold border border-orange-500/20 hover:bg-orange-500/20 transition-all flex items-center gap-2">
                       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                       <span class="hidden md:inline">Simular Desgaste (IA)</span>
                   </button>
@@ -264,7 +264,7 @@ export const AssetsPage = () => {
           <div class="overflow-x-auto">
               <table class="w-full text-left border-collapse">
                   <thead>
-                      <tr class="text-xs text-slate-400 uppercase tracking-wider border-b border-white/5 bg-white/[0.01]">
+                      <tr class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider border-b border-slate-200 dark:border-white/5 bg-slate-100/50 dark:bg-white/[0.01]">
                           <th class="p-6 font-semibold">ID</th>
                           <th class="p-6 font-semibold">Nome</th>
                           <th class="p-6 font-semibold">Criticidade</th>
@@ -273,7 +273,7 @@ export const AssetsPage = () => {
                           <th class="p-6 font-semibold text-right">Ações</th>
                       </tr>
                   </thead>
-                  <tbody id="assets-body" class="divide-y divide-white/5">
+                  <tbody id="assets-body" class="divide-y divide-slate-200 dark:divide-white/5">
                       ${renderTable()}
                   </tbody>
               </table>
